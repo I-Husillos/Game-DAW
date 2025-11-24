@@ -32,9 +32,9 @@ body {
 
 .enemy {
   position: absolute;
-  right: 27%;
-  bottom: 6%;
-  width: 45%;
+  right: 30%;
+  bottom: 16%;
+  width: 40%;
 }
 
 .room-name {
