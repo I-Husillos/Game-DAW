@@ -7,9 +7,9 @@ body {
 
 .grid-root {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
   display: grid;
-  gap: 40px;
+  gap: 30px;
   grid-template-columns: 1fr 450px;
   grid-template-areas:
     "scene ficha"
@@ -20,7 +20,7 @@ body {
 .scene {
   grid-area: scene;
   width: 100%;
-  max-width: 750px;
+  max-height: 475px;
   position: relative;
   margin: 0 auto; 
 }
@@ -75,7 +75,7 @@ body {
   padding: 15px;
   font-family: monospace;
   /* Establece una altura maxima. Cuando el contenido la supere, aparecerá el scroll. */
-  max-height: 250px;
+  max-height: 200px;
   overflow-y: auto; /* 'auto' es mejor que 'scroll' para que solo aparezca cuando sea necesario */
   scrollbar-color: #005500 #051505; /* Propiedad estándar (para Firefox/Edge) */
 }
@@ -115,6 +115,10 @@ body {
   margin-bottom: 10px;
 }
 
+.text-input-commands {
+  display: flex;
+}
+
 .command input {
   flex: 1;
   padding: 8px;
@@ -140,7 +144,10 @@ body {
   background-color: rgba(0, 255, 0, 0.2);
   border: 1px solid #00ff00;
   color: #00ff00;
-  padding: 8px;
+  padding: 3px 5px;
+  font-size: 11px;
+  height: 28px;
+
   border-radius: 5px;
   cursor: pointer;
   text-transform: uppercase;
