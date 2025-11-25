@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Luigi y el Eco de los Espíritus</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
   <!-- CONTENEDOR PRINCIPAL COMO GRID -->
   <main class="grid-root">
-    <!-- 'aria-label' da una descripción para lectores de pantalla, mejorando la accesibilidad -->
-    <section id="escena" class="scene" aria-label="Escena del juego">
+    <section id="escena" class="scene">
       <div class="scene-inner">
-        <!-- 'alt' es un texto alternativo si la imagen no carga, importante para accesibilidad -->
         <img class="scene-bg" src="./img/scenaries/ascensor.jpg" alt="Fondo de sala">
         <img class="enemy" src="./img/characters/goob.png" alt="Monstruo pequeño">
         <div class="room-name"><h2>Ascensor del hotel</h2></div>
@@ -21,12 +19,11 @@
     </section>
 
     <!-- ficha del personaje-->
-    <!-- 'aria-labelledby' conecta esta sección con su título para lectores de pantalla -->
-    <section id="ficha" class="player-card" aria-labelledby="ficha-title">
+    <section id="ficha" class="player-card">
       <div class="text-stacs">
         <h3 id="ficha-title">Ficha del Personaje</h3>
-        <p><strong>Fuerza:</strong> 12 (+2)</p>
-        <p><strong>Defensa:</strong> 8 (+1)</p>
+        <p><strong>Fuerza:</strong> 12</p>
+        <p><strong>Defensa:</strong> 8</p>
         <p><strong>Vida:</strong> 34 / 40</p>
         <p><strong>Oro:</strong> 123</p>
         <p><strong>Pociones:</strong> 2</p>
@@ -35,8 +32,7 @@
 
     <!-- sección de mensajes de acontecimientos-->
       <!-- 'role="log"' indica que este div es un registro de mensajes -->
-      <!-- 'aria-live="polite"' hace que los lectores de pantalla anuncien nuevos mensajes sin interrumpir al usuario -->
-      <div id="mensajes" class="messages" role="log" aria-live="polite">
+      <div id="mensajes" class="messages" role="log">
         <div id="log" class="text-messages">
           <p>Has entrado en la Cámara del Guardián.</p>
           <p>Encuentro: un monstruo pequeño aparece.</p>
@@ -69,7 +65,7 @@
             <button class="btn">Este</button>
         </div>
         <div class="actions">
-            <button class="btn">Comprar</button>
+            <button class="btn ">Comprar</button>
             <button class="btn blue">Buscar</button>
             <button class="btn blue">Ayuda</button>
         </div>
