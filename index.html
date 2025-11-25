@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,36 +7,21 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-
 <body>
   <!-- CONTENEDOR PRINCIPAL COMO GRID -->
   <main class="grid-root">
-    <!-- escena -->
+    <!-- 'aria-label' da una descripción para lectores de pantalla, mejorando la accesibilidad -->
     <section id="escena" class="scene" aria-label="Escena del juego">
       <div class="scene-inner">
+        <!-- 'alt' es un texto alternativo si la imagen no carga, importante para accesibilidad -->
         <img class="scene-bg" src="./img/scenaries/ascensor.jpg" alt="Fondo de sala">
         <img class="enemy" src="./img/characters/goob.png" alt="Monstruo pequeño">
         <div class="room-name"><h2>Ascensor del hotel</h2></div>
       </div>
     </section>
-    
-<!-- 
-    <section id="escena" class="scene" aria-label="Escena del juego">
-      
-      <div class="frame-container">
-        <img class="frame" src="./img/scenaries/50ff2e03-1840-4560-bad1-21fa6119a6bb.png" alt="Marco decorativo">
-        
-        <div class="scene-content">
-          <img class="scene-bg" src="./img/scenaries/ascensor.jpeg" alt="Fondo de sala">
-          <img class="enemy" src="./img/characters/goob.png" alt="Monstruo pequeño">
-        </div>
-      </div>
 
-      <div class="room-name"><h2>Ascensor del hotel</h2></div>
-    </section> -->
-
-
-    <!-- ficha -->
+    <!-- ficha del personaje-->
+    <!-- 'aria-labelledby' conecta esta sección con su título para lectores de pantalla -->
     <section id="ficha" class="player-card" aria-labelledby="ficha-title">
       <div class="text-stacs">
         <h3 id="ficha-title">Ficha del Personaje</h3>
@@ -49,7 +33,9 @@
       </div>
     </section>
 
-    <!-- mensajes -->
+    <!-- sección de mensajes de acontecimientos-->
+      <!-- 'role="log"' indica que este div es un registro de mensajes -->
+      <!-- 'aria-live="polite"' hace que los lectores de pantalla anuncien nuevos mensajes sin interrumpir al usuario -->
       <div id="mensajes" class="messages" role="log" aria-live="polite">
         <div id="log" class="text-messages">
           <p>Has entrado en la Cámara del Guardián.</p>
@@ -67,11 +53,11 @@
         </div>
       </div>
 
-    <!-- controles -->
+    <!-- controles del peraonaje más compra, ayuda y busqueda-->
     <section id="interaccion" class="interaction">
       <div class="control-title"><h2>Controles</h2></div>
       <div class="command">
-        <label class="text-input-commands" for="cmd">Comando:</label>
+        <label class="text-input-commands">Comando:</label>
         <input id="cmd" type="text" placeholder="Ej: ir norte, buscar, poción...">
         <button class="btn primary">Enviar</button>
       </div>

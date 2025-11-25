@@ -1,3 +1,4 @@
+/* estilos generales del cuerpo de la pagina */
 body {
   margin: 12px;
   font-family: Georgia, "Times New Roman", serif;
@@ -5,38 +6,49 @@ body {
   color: #222;
 }
 
+/* contenedor principal de la cuadricula */
 .grid-root {
   max-width: 1200px;
   margin: auto;
+  /* display grid convierte el elemento en un contenedor de cuadricula */
   display: grid;
   gap: 30px;
+  /* define dos columnas, la primera ocupa el espacio restante (1fr) y la segunda 450px */
   grid-template-columns: 1fr 450px;
+  /* define las areas de la cuadricula para organizar el contenido */
   grid-template-areas:
     "scene ficha"
     "messages controls";
   align-items: center;
 }
 
+/* estilos de la escena del juego */
 .scene {
+  /* asigna este elemento al area 'scene' de la cuadricula */
   grid-area: scene;
   width: 100%;
   max-height: 475px;
+  /* position relative es necesario para que los elementos hijos con position absolute se posicionen respecto a este */
   position: relative;
   margin: 0 auto; 
 }
 
+/* fondo de la escena */
 .scene-bg {
   width: 100%;
   height: 100%;
 }
 
+/* posicion y tamaño del enemigo */
 .enemy {
+  /* position absolute saca al elemento del flujo normal y lo posiciona respecto a su ancestro posicionado mas cercano */
   position: absolute;
   right: 30%;
   bottom: 16%;
   width: 40%;
 }
 
+/* nombre de la habitacion */
 .room-name {
   background: #222;
   color: #0f0;
@@ -45,28 +57,36 @@ body {
   border-radius: 4px;
 }
 
+/* titulo del nombre de la habitacion */
 .room-name h2 {
   margin: 0;
   font-size: 20px;
 }
 
+/* tarjeta del jugador */
 .player-card {
+  /* asigna este elemento al area 'ficha' de la cuadricula */
   grid-area: ficha;
   background: url(/img/ui/console-edit.png) no-repeat center / 100% 100%;
   color: #fff;
   height: 280px;
+  /* box-sizing border-box incluye el padding y el borde en el tamaño total del elemento */
   box-sizing: border-box;
+  /* display flex convierte el elemento en un contenedor flexible para alinear a sus hijos */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+/* estadisticas de texto */
 .text-stacs {
   width: 100%;
   padding-left: 70px;
 }
 
+/* caja de mensajes */
 .messages {
+  /* asigna este elemento al area 'messages' de la cuadricula */
   grid-area: messages;
   background-color: #051505;
   color: #cfc;
@@ -74,13 +94,15 @@ body {
   border-radius: 8px;
   padding: 15px;
   font-family: monospace;
-  /* Establece una altura maxima. Cuando el contenido la supere, aparecerá el scroll. */
+  /* establece una altura maxima y cuando el contenido la supere aparecera el scroll */
   max-height: 200px;
-  overflow-y: auto; /* 'auto' es mejor que 'scroll' para que solo aparezca cuando sea necesario */
-  scrollbar-color: #005500 #051505; /* Propiedad estándar (para Firefox/Edge) */
+  /* overflow-y auto muestra la barra de desplazamiento vertical solo si es necesario */
+  overflow-y: auto;
+  /* personaliza el color de la barra de desplazamiento en firefox */
+  scrollbar-color: #005500 #051505;
 }
 
-/* Y mantenemos las propiedades para Chrome/Safari para máxima compatibilidad */
+/* estas reglas personalizan la barra de desplazamiento en navegadores webkit como chrome y safari */
 .messages::-webkit-scrollbar {
   width: 10px;
 }
@@ -92,34 +114,43 @@ body {
   border-radius: 5px;
 }
 
+/* seccion de interaccion */
 .interaction {
+  /* asigna este elemento al area 'controls' de la cuadricula */
   grid-area: controls;
   background-color: #001100;
   border: 4px solid #cc3333;
   border-radius: 20px;
   color: #00ff00;
   padding: 15px;
+  /* box-shadow inset crea una sombra interior */
   box-shadow: inset 0 0 10px #000;
 }
 
+/* titulo de la seccion de interaccion */
 .interaction h2 {
   margin: 0 0 10px 0;
   font-size: 20px;
+  /* text-transform uppercase convierte el texto a mayusculas */
   text-transform: uppercase;
   text-align: center;
 }
 
+/* contenedor de comandos */
 .command {
   display: flex;
   gap: 8px;
   margin-bottom: 10px;
 }
 
+/* entrada de texto para comandos */
 .text-input-commands {
   display: flex;
 }
 
+/* estilos del campo de entrada de comandos */
 .command input {
+  /* flex 1 hace que el campo de entrada ocupe todo el espacio disponible en el contenedor flex */
   flex: 1;
   padding: 8px;
   background: #003300;
@@ -128,19 +159,23 @@ body {
   border-radius: 4px;
 }
 
+/* cuadricula de botones rapidos */
 .quick-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 
+/* cuadricula para botones de direccion y accion */
 .directions,
 .actions {
   display: grid;
   gap: 8px;
 }
 
+/* estilos de los botones */
 .btn {
+  /* rgba define un color con transparencia, el ultimo valor (0.2) es la opacidad */
   background-color: rgba(0, 255, 0, 0.2);
   border: 1px solid #00ff00;
   color: #00ff00;
@@ -149,17 +184,21 @@ body {
   height: 28px;
 
   border-radius: 5px;
+  /* cursor pointer cambia el cursor a una mano al pasar sobre el boton */
   cursor: pointer;
   text-transform: uppercase;
+  /* transition crea una animacion suave para todos los cambios de propiedades */
   transition: all 0.2s;
 }
 
+/* :hover es una pseudo-clase que aplica estilos cuando el raton esta sobre el elemento */
 .btn:hover {
   background-color: #00ff00;
   color: #000;
   box-shadow: 0 0 10px #00ff00;
 }
 
+/* estilos para botones con la clase adicional 'blue' */
 .btn.blue {
   background-color: rgba(0, 180, 255, 0.4);
   border-color: #b3e5fc;
@@ -167,6 +206,7 @@ body {
   box-shadow: 0 0 5px #00bfff;
 }
 
+/* efecto hover para botones azules */
 .btn.blue:hover {
   background-color: #00bfff;
   box-shadow: 0 0 15px #fff;
