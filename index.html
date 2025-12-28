@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,18 +10,21 @@
 <body>
   <!-- CONTENEDOR PRINCIPAL COMO GRID -->
   <main class="grid-root">
-    <section id="escena" class="scene">
-      <div class="scene-inner">
-        <img class="scene-bg" src="./img/scenaries/ascensor.png" alt="Fondo de sala">
-        <img class="enemy" src="./img/characters/goob.png" alt="Monstruo pequeño">
-        <div class="room-name"><h2>Ascensor del hotel</h2></div>
-      </div>
+    <section id="scene" class="scene">
+      <!-- fondo -->
+      <img id="sceneBg" class="scene-bg" src="" alt="Escenario">
+
+      <!-- enemigo (vacío por defecto) -->
+      <img id="enemyImg" class="enemy" src="" alt="" style="display:none">
+
+      <!-- nombre sala -->
+      <div id="nameRoom" class="room-name"></div>
     </section>
 
-    <!-- ficha del personaje-->
-    <section id="ficha" class="player-card">
-      <div class="text-stacs">
-        <h3 id="ficha-title">Ficha del Personaje</h3>
+    <!-- stats del personaje-->
+    <section id="stats" class="player-card">
+      <div id="divStacs" class="text-stacs">
+        <h3 id="stats-title">Ficha del Personaje</h3>
         <p><strong>Fuerza:</strong> 12</p>
         <p><strong>Defensa:</strong> 8</p>
         <p><strong>Vida:</strong> 70 / 100</p>
@@ -32,20 +35,8 @@
 
     <!-- sección de mensajes de acontecimientos-->
       <!-- 'role="log"' indica que este div es un registro de mensajes -->
-      <div id="mensajes" class="messages" role="log">
+      <div id="divMessages" class="messages" role="log">
         <div id="log" class="text-messages">
-          <p>Has entrado en la Cámara del Guardián.</p>
-          <p>Encuentro: un monstruo pequeño aparece.</p>
-          <p>Has encontrado 5 monedas de oro.</p>
-          <p>Has entrado en la Cámara del Guardián.</p>
-          <p>Encuentro: un monstruo pequeño aparece.</p>
-          <p>Has encontrado 5 monedas de oro.</p>
-          <p>Has entrado en la Cámara del Guardián.</p>
-          <p>Encuentro: un monstruo pequeño aparece.</p>
-          <p>Has encontrado 5 monedas de oro.</p>
-          <p>Has entrado en la Cámara del Guardián.</p>
-          <p>Encuentro: un monstruo pequeño aparece.</p>
-          <p>Has encontrado 5 monedas de oro.</p>
         </div>
       </div>
 
@@ -59,10 +50,10 @@
       </div>
       <div class="quick-buttons">
         <div class="directions">
-            <button class="btn">Norte</button>
-            <button class="btn">Sur</button>
-            <button class="btn">Este</button>
-            <button class="btn">Oeste</button>
+            <button id="btnNorth" class="btn">Norte</button>
+            <button id="btnSouth" class="btn">Sur</button>
+            <button id="btnEast" class="btn">Este</button>
+            <button id="btnWest" class="btn">Oeste</button>
         </div>
         <div class="actions">
             <button class="btn ">Comprar</button>
@@ -72,5 +63,8 @@
       </div>
     </section>
   </main>
+
+  <script src="js/map.js"></script>
+  <script src="js/index.js"></script>
 </body>
 </html>

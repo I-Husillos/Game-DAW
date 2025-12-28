@@ -17,7 +17,7 @@ body {
   grid-template-columns: 1fr 450px;
   /* define las areas de la cuadricula para organizar el contenido */
   grid-template-areas:
-    "scene ficha"
+    "scene stats"
     "messages controls";
   align-items: center;
 }
@@ -65,8 +65,8 @@ body {
 
 /* tarjeta del jugador */
 .player-card {
-  /* asigna este elemento al area 'ficha' de la cuadricula */
-  grid-area: ficha;
+  /* asigna este elemento al area 'stats' de la cuadricula */
+  grid-area: stats;
   background: url(/img/ui/console-edit.png) no-repeat center / 100% 100%;
   color: #fff;
   height: 280px;
@@ -96,13 +96,15 @@ body {
   font-family: monospace;
   /* establece una altura maxima y cuando el contenido la supere aparecera el scroll */
   max-height: 200px;
+  /* establece una altura minima y cuando el contenido la supere aparecera el scroll */
+  min-height: 200px;
   /* overflow-y auto muestra la barra de desplazamiento vertical solo si es necesario */
   overflow-y: auto;
   /* personaliza el color de la barra de desplazamiento en firefox */
   scrollbar-color: #005500 #051505;
 }
 
-/* estas reglas personalizan la barra de desplazamiento en navegadores webkit como chrome y safari */
+/* estas reglas personalizan la barra de desplazamiento en navegadores como chrome y safari */
 .messages::-webkit-scrollbar {
   width: 10px;
 }
