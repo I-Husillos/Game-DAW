@@ -94,7 +94,9 @@ function movePlayer(direction){
     showRoom(newRoom);
 
     // limpia la imagen del enemigo anterior
-    enemyImg.innerHTML = "";
+    enemyImg.style.display = "none";
+    enemyImg.src = "";
+
 
     // comprueba si aparece un enemigo en la nueva sala
     checkEnemy(newRoom);
