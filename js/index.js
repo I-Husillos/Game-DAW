@@ -9,6 +9,8 @@ let btnNorth = document.getElementById("btnNorth");
 let btnSouth = document.getElementById("btnSouth");
 let btnEast = document.getElementById("btnEast");
 let btnWest = document.getElementById("btnWest");
+let btnSearchGold = document.getElementById("btnSearchGold");
+
 
 // obtiene la sala actual en la que se encuentra el jugador
 function getCurrentRoom(){
@@ -101,6 +103,11 @@ function movePlayer(direction){
 
 // comprueba si aparece un enemigo en la sala
 function checkEnemy(room){
+    // si está el jugador en la tienda no aparecen enemigos
+    if (room.isShop) {
+        return;
+    }
+
     // genera un número aleatorio para determinar si aparece un enemigo
     let probabilidad = Math.random();
 
@@ -121,8 +128,8 @@ function spawnEnemy(){
     let enemy = enemies[Math.floor(Math.random() * enemies.length)];
 
     // muestra el enemigo y un mensaje
-    showEnemy(enemy);
     addMessage(`¡Ha aparecido un ${enemy.name}!`)
+    showEnemy(enemy);
 }
 
 // hace aparecer al jefe final
@@ -173,6 +180,9 @@ btnNorth.addEventListener("click", () => movePlayer("north"));
 btnSouth.addEventListener("click", () => movePlayer("south"));
 btnEast.addEventListener("click",  () => movePlayer("east"));
 btnWest.addEventListener("click",  () => movePlayer("west"));
+
+// añade el evento de click al botón de buscar oro
+btnSearchGold.addEventListener("click", () => searchGold());
 
 // cuando la página se carga completamente, se muestra la sala inicial y las estadísticas del jugador
 window.addEventListener("load", () => {
