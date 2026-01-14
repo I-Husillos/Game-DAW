@@ -1,193 +1,226 @@
-let sceneImg = document.getElementById("sceneBg");
-let divStats = document.getElementById("divStacs");
-let enemyImg = document.getElementById("enemyImg");
-let divMessages = document.getElementById("log");
-let divNombreSala = document.getElementById("nameRoom");
+// estado inicial del juego, que se carga desde el fichero map.js
+let gameState = defaultGameState;
 
+// obtención de elementos del DOM para interactuar con la interfaz
+let sceneImg     = document.getElementById("sceneBg");
+let enemyImg     = document.getElementById("enemyImg");
+let divRoomName  = document.getElementById("nameRoom");
+let divStats     = document.getElementById("divStacs");
+let divMessages  = document.getElementById("log");
 
-let btnNorth = document.getElementById("btnNorth");
-let btnSouth = document.getElementById("btnSouth");
-let btnEast = document.getElementById("btnEast");
-let btnWest = document.getElementById("btnWest");
-let btnSearchGold = document.getElementById("btnSearchGold");
+// obtención de los botones para asignarles eventos
+let btnNorth  = document.getElementById("btnNorth");
+let btnSouth  = document.getElementById("btnSouth");
+let btnEast   = document.getElementById("btnEast");
+let btnWest   = document.getElementById("btnWest");
+let btnSearch = document.getElementById("btnSearchGold");
+let btnPotion = document.getElementById("btnPotion");
+let btnBuy    = document.getElementById("btnBuy");
 
-
-// obtiene la sala actual en la que se encuentra el jugador
-function getCurrentRoom(){
-    // busca en el mapa la sala cuyo id coincida con el de la sala actual del jugador
+// devuelve la información de la habitación actual del jugador
+function getCurrentRoom() {
+    
     let currentRoomId = defaultGameState.player.currentRoom;
 
     return defaultGameState.map.rooms.find(room => room.id === currentRoomId);
 }
 
-// muestra la información de una sala en la interfaz
-function showRoom(room){
-    // actualiza la imagen de fondo de la escena
-    sceneImg.src = room.img;
-
-    // muestra el nombre de la sala
-    divNombreSala.innerHTML = `
-        <h2>${room.name}</h2>
-    `;
-
-    // añade a los mensajes la descripción y las salidas disponibles de la sala
-    divMessages.innerHTML += `
-        <p>${room.description}</p>
-        <p>
-            Salidas:
-            ${room.north !== null ? " Norte" : ""}
-            ${room.south !== null ? " Sur" : ""}
-            ${room.east  !== null ? " Este" : ""}
-            ${room.west  !== null ? " Oeste" : ""}
-        </p>
-    `;
+// escribe un mensaje en el registro de eventos del juego
+function writeLog(text) {
+    let p = document.createElement("p");
+    p.textContent = text;
+    divMessages.appendChild(p);
+    // hace scroll automáticamente para mostrar el último mensaje
+    divMessages.scrollTop = divMessages.scrollHeight;
 }
 
+// actualiza la imagen y el nombre de la habitación en la interfaz
+function renderRoom(room) {
+    sceneImg.src = room.img;
+    sceneImg.alt = room.name;
 
-// muestra las estadísticas del jugador
-function showStats(){
+    divRoomName.innerHTML = `<h2>${room.name}</h2>`;
+
+    writeLog(room.description);
+    renderExits(room);
+}
+
+// muestra las estadísticas actuales del jugador
+function renderStats() {
+    let p = gameState.player;
+
     divStats.innerHTML = `
         <h2>Estadísticas</h2>
-        <p><strong>Fuerza:</strong> ${defaultGameState.player.strength}</p>
-        <p><strong>Defensa:</strong> ${defaultGameState.player.defense}</p>
-        <p><strong>Salud:</strong> ${defaultGameState.player.health}</p>
-        <p><strong>Oro:</strong> ${defaultGameState.player.gold}</p>
-        <p><strong>Pociones:</strong> ${defaultGameState.player.potions}</p>
-        `;
+        <p><strong>Fuerza:</strong> ${p.strength}</p>
+        <p><strong>Defensa:</strong> ${p.defense}</p>
+        <p><strong>Vida:</strong> ${p.health}</p>
+        <p><strong>Oro:</strong> ${p.gold}</p>
+        <p><strong>Pociones:</strong> ${p.potions}</p>
+    `;
 }
 
-// muestra un enemigo en la interfaz
-function showEnemy(enemy){
-    // establece la imagen del enemigo y la hace visible
+// indica al jugador las salidas disponibles en la habitación actual
+function renderExits(room) {
+    let exits = [];
+
+    // comprueba cada dirección y la añade si existe una salida
+    if (room.north !== null) exits.push("Norte");
+    if (room.south !== null) exits.push("Sur");
+    if (room.east  !== null) exits.push("Este");
+    if (room.west  !== null) exits.push("Oeste");
+
+    writeLog(`Salidas disponibles: ${exits.join(", ")}`);
+}
+
+// muestra la imagen del enemigo en la escena
+function renderEnemy(enemy) {
     enemyImg.src = enemy.img;
     enemyImg.alt = enemy.name;
     enemyImg.style.display = "block";
-    
-    // muestra las estadísticas del enemigo en los mensajes
-    divMessages.innerHTML += `
-        <h2>${enemy.name}</h2>
-        <p><strong>Fuerza:</strong> ${enemy.strength}</p>
-        <p><strong>Defensa:</strong> ${enemy.defence}</p>
-        <p><strong>Salud:</strong> ${enemy.health}</p>
-        `;
 }
 
+// oculta la imagen del enemigo
+function clearEnemy() {
+    enemyImg.style.display = "none";
+    enemyImg.src = "";
+}
 
+// gestiona el movimiento del jugador entre habitaciones
+function movePlayer(direction) {
+    let room = getCurrentRoom();
+    // obtiene el id de la siguiente habitación según la dirección
+    let nextRoomId = room[direction];
 
-// mueve al jugador a una nueva sala
-function movePlayer(direction){
-    // obtiene la sala actual y la id de la nueva sala según la dirección
-    let currentRoom = getCurrentRoom();
-    let newRoomId = currentRoom[direction];
-
-    // si no hay salida en esa dirección, muestra un mensaje y no hace nada
-    if(newRoomId == null){
-        addMessage("No hay salida en esa dirección");
+    // si no hay salida, informa al jugador
+    if (nextRoomId === null) {
+        writeLog("No hay salida en esa dirección.");
         return;
     }
 
-    // actualiza la sala actual del jugador
-    defaultGameState.player.currentRoom = newRoomId;
+    // actualiza la habitación actual del jugador
+    gameState.player.currentRoom = nextRoomId;
 
-    // obtiene y muestra la nueva sala
+    // renderiza la nueva habitación y gestiona los eventos de entrada
     let newRoom = getCurrentRoom();
-    showRoom(newRoom);
-
-    // limpia la imagen del enemigo anterior
-    enemyImg.style.display = "none";
-    enemyImg.src = "";
-
-
-    // comprueba si aparece un enemigo en la nueva sala
-    checkEnemy(newRoom);
+    clearEnemy();
+    renderRoom(newRoom);
+    handleRoomEnter(newRoom);
 }
 
-
-// comprueba si aparece un enemigo en la sala
-function checkEnemy(room){
-    // si está el jugador en la tienda no aparecen enemigos
+// gestiona los eventos que ocurren al entrar en una habitación
+function handleRoomEnter(room) {
+    // si es una tienda, no aparecen monstruos
     if (room.isShop) {
+        writeLog("Te encuentras en una zona segura.");
         return;
     }
 
     // genera un número aleatorio para determinar si aparece un enemigo
-    let probabilidad = Math.random();
+    let roll = Math.random();
 
-    // si la probabilidad es menor que la establecida en la sala, aparece un enemigo normal
-    if(probabilidad < room.monsterProb){
-        spawnEnemy();
-    // si la probabilidad es muy baja, aparece el jefe
-    } else if (probabilidad < 0.02){
+    // probabilidad de que aparezca el jefe final 2%
+    if (roll < 0.02) {
         spawnBoss();
+    // probabilidad de que aparezca un enemigo normal
+    } else if (roll < room.monsterProb) {
+        spawnEnemy();
     }
 }
 
-// hace aparecer un enemigo aleatorio (que no sea jefe)
-function spawnEnemy(){
+// hace aparecer un enemigo normal de forma aleatoria
+function spawnEnemy() {
     // filtra los enemigos que no son jefes
-    let enemies = defaultGameState.map.enemies.filter(enemy => !enemy.isBoss);
-    // elige un enemigo al azar de la lista filtrada
+    let enemies = gameState.map.enemies.filter(e => !e.isBoss);
+    // selecciona un enemigo al azar
     let enemy = enemies[Math.floor(Math.random() * enemies.length)];
 
-    // muestra el enemigo y un mensaje
-    addMessage(`¡Ha aparecido un ${enemy.name}!`)
-    showEnemy(enemy);
+    renderEnemy(enemy);
+    writeLog(`¡Un ${enemy.name} aparece!`);
 }
 
 // hace aparecer al jefe final
-function spawnBoss(){
-    // busca al enemigo que está marcado como jefe
-    let boss = defaultGameState.map.enemies.find(enemy => enemy.isBoss === true);
+function spawnBoss() {
+    let boss = gameState.map.enemies.find(e => e.isBoss);
 
-    // muestra al jefe y un mensaje especial
-    showEnemy(boss);
-    addMessage("¡HAS DESPERTADO AL JEFE FINAL!");
+    renderEnemy(boss);
+    writeLog("¡HAS DESPERTADO AL JEFE FINAL!");
 }
 
-// permite al jugador buscar oro en la sala actual
-function searchGold(){
-    // obtiene la sala actual
-    let currentRoom = getCurrentRoom();
+// permite al jugador buscar oro en la habitación
+function searchGold() {
+    let room = getCurrentRoom();
 
-    // si la sala no tiene probabilidad de monstruos, se asume que no hay nada que buscar
-    if(currentRoom.monsterProb <= 0){
-        addMessage("No parece haber nada de valor aquí.");
+    // comprueba si ya se ha buscado oro en la habitación
+    if (room.goldSearched) {
+        writeLog("Aquí ya no queda nada de valor.");
         return;
     }
 
-    // calcula una cantidad aleatoria de oro encontrado (entre 0 y 10)
-    let goldFound = Math.floor(Math.random() * 11);
+    // marca la habitación como registrada
+    room.goldSearched = true;
 
-    // si se encuentra oro, se añade al jugador y se muestra un mensaje
-    if(goldFound > 0){
-        defaultGameState.player.gold += goldFound;
-        addMessage(`Has encontrado ${goldFound} oro!`);
-    // si no se encuentra oro, se informa al jugador
-    } else {
-        addMessage("Buscas durante un rato, pero no encuentras nada.");
+    // otorga una cantidad aleatoria de oro al jugador
+    let gold = Math.floor(Math.random() * 11) + 5;
+    gameState.player.gold += gold;
+
+    writeLog(`Encuentras ${gold} monedas de oro.`);
+    renderStats();
+}
+
+// permite al jugador usar una poción para recuperar salud
+function usePotion() {
+    let p = gameState.player;
+
+    if (p.potions <= 0) {
+        writeLog("No te quedan pociones.");
+        return;
     }
 
-    // actualiza las estadísticas para reflejar el posible cambio en el oro
-    showStats();
+    p.potions--;
+    // recupera 25 de vida, sin superar el máximo de 100
+    p.health = Math.min(100, p.health + 25);
+
+    writeLog("Usas una poción y recuperas salud.");
+    renderStats();
 }
 
-// añade un mensaje al panel de mensajes y hace scroll hacia abajo
-function addMessage(text) {
-    divMessages.innerHTML += `<p>${text}</p>`;
-    divMessages.scrollTop = divMessages.scrollHeight;
+// permite al jugador comprar una poción en una tienda
+function buyPotion() {
+    let room = getCurrentRoom();
+    let p = gameState.player;
+
+    if (!room.isShop) {
+        writeLog("Aquí no puedes comprar.");
+        return;
+    }
+
+    if (p.gold < 20) {
+        writeLog("No tienes suficiente oro.");
+        return;
+    }
+
+    p.gold -= 20;
+    p.potions++;
+
+    writeLog("Compras una poción.");
+    renderStats();
 }
 
-// añade los eventos de click a los botones de movimiento
+// asigna la función de movimiento a los botones de dirección
 btnNorth.addEventListener("click", () => movePlayer("north"));
 btnSouth.addEventListener("click", () => movePlayer("south"));
 btnEast.addEventListener("click",  () => movePlayer("east"));
 btnWest.addEventListener("click",  () => movePlayer("west"));
 
-// añade el evento de click al botón de buscar oro
-btnSearchGold.addEventListener("click", () => searchGold());
+// asigna las funciones correspondientes a los botones de acción
+btnSearch.addEventListener("click", searchGold);
+btnPotion.addEventListener("click", usePotion);
+btnBuy.addEventListener("click", buyPotion);
 
-// cuando la página se carga completamente, se muestra la sala inicial y las estadísticas del jugador
+// se ejecuta cuando la página ha cargado completamente
 window.addEventListener("load", () => {
-    showRoom(getCurrentRoom());
-    showStats();
+    // renderiza la habitación inicial y las estadísticas del jugador
+    renderRoom(getCurrentRoom());
+    renderStats();
+    writeLog("Bienvenido a la Mansión Encantada");
 });
