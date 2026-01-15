@@ -102,6 +102,7 @@ body {
   overflow-y: auto;
   /* personaliza el color de la barra de desplazamiento en firefox */
   scrollbar-color: #005500 #051505;
+  scroll-behavior: smooth;
 }
 
 /* estas reglas personalizan la barra de desplazamiento en navegadores como chrome y safari */

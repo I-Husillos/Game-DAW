@@ -7,6 +7,8 @@ let enemyImg     = document.getElementById("enemyImg");
 let divRoomName  = document.getElementById("nameRoom");
 let divStats     = document.getElementById("divStacs");
 let divMessages  = document.getElementById("log");
+const messagesContainer = document.getElementById("divMessages");
+
 
 // obtención de los botones para asignarles eventos
 let btnNorth  = document.getElementById("btnNorth");
@@ -31,7 +33,7 @@ function writeLog(text) {
     p.textContent = text;
     divMessages.appendChild(p);
     // hace scroll automáticamente para mostrar el último mensaje
-    divMessages.scrollTop = divMessages.scrollHeight;
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
 // actualiza la imagen y el nombre de la habitación en la interfaz
