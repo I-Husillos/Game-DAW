@@ -159,5 +159,12 @@ const defaultGameState={
                 img: "/img/characters/steward.png"
             }
         ],
+        character:[
+            {
+                name: "Professor",
+                isBoss: false,
+                img: "/img/characters/professor_d._sastre.png"
+            }
+        ],
     }
 }

@@ -48,6 +48,15 @@ body {
   width: 40%;
 }
 
+/* posicion y tamaño del enemigo */
+.professor {
+  /* position absolute saca al elemento del flujo normal y lo posiciona respecto a su ancestro posicionado mas cercano */
+  position: absolute;
+  right: 30%;
+  bottom: 10%;
+  width: 40%;
+}
+
 /* nombre de la habitacion */
 .room-name {
   background: #222;

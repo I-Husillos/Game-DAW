@@ -4,10 +4,11 @@ let gameState = defaultGameState;
 // obtención de elementos del DOM para interactuar con la interfaz
 let sceneImg     = document.getElementById("sceneBg");
 let enemyImg     = document.getElementById("enemyImg");
+let professorrImg= document.getElementById("professorrImg");
 let divRoomName  = document.getElementById("nameRoom");
 let divStats     = document.getElementById("divStacs");
 let divMessages  = document.getElementById("log");
-const messagesContainer = document.getElementById("divMessages");
+let messagesContainer = document.getElementById("divMessages");
 
 
 // obtención de los botones para asignarles eventos
@@ -114,6 +115,11 @@ function handleRoomEnter(room) {
     // si es una tienda, no aparecen monstruos
     if (room.isShop) {
         writeLog("Te encuentras en una zona segura.");
+
+        professorrImg.src = gameState.map.character[0].img;
+        professorrImg.alt = "Professor";
+        professorrImg.style.display = "block";
+
         return;
     }
 
