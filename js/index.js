@@ -105,6 +105,7 @@ function movePlayer(direction) {
 
     // renderiza la nueva habitación y gestiona los eventos de entrada
     let newRoom = getCurrentRoom();
+    newRoom.goldSearched = false;
     clearEnemy();
     renderRoom(newRoom);
     handleRoomEnter(newRoom);
@@ -122,6 +123,9 @@ function handleRoomEnter(room) {
 
         return;
     }
+
+    // Si no es una tienda, oculta al profesor.
+    professorrImg.style.display = "none";
 
     // genera un número aleatorio para determinar si aparece un enemigo
     let roll = Math.random();
@@ -161,6 +165,9 @@ function searchGold() {
     // comprueba si ya se ha buscado oro en la habitación
     if (room.goldSearched) {
         writeLog("Aquí ya no queda nada de valor.");
+        return;
+    } else if (room.isShop){
+        writeLog("Aquí no puedes buscar.");
         return;
     }
 
