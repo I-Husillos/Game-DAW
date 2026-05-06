@@ -223,3 +223,24 @@ body {
   background-color: #00bfff;
   box-shadow: 0 0 15px #fff;
 }
+
+.btnHelp {
+  /* centrar */
+  display: block;
+  margin: 10px auto 0 auto;
+}
+
+/* Estilo para botones con la clase adicional 'red' (siguiendo la lógica de .blue) */
+.btn.red {
+  background-color: rgba(255, 0, 0, 0.3); /* Rojo translúcido */
+  border-color: #ff4444;                 /* Borde rojo claro */
+  color: #fff;                           /* Texto blanco para mejor contraste */
+  box-shadow: 0 0 5px #ff0000;           /* Brillo neón rojo */
+}
+
+/* Efecto hover para botones rojos */
+.btn.red:hover {
+  background-color: #ff0000;
+  color: #fff;
+  box-shadow: 0 0 15px #ff0000;
+}

@@ -46,11 +46,6 @@
     <!-- controles del peraonaje más compra, ayuda y busqueda-->
     <section id="interaccion" class="interaction">
       <div class="control-title"><h2>Controles</h2></div>
-      <div class="command">
-        <label class="text-input-commands">Comando:</label>
-        <input id="cmd" type="text" placeholder="Ej: ir norte, buscar, poción...">
-        <button class="btn primary">Enviar</button>
-      </div>
       <div class="quick-buttons">
         <div class="directions">
             <button id="btnNorth" class="btn">Norte</button>
@@ -60,10 +55,11 @@
         </div>
         <div class="actions">
             <button id="btnBuy" class="btn">Comprar</button>
-            <button id="btnSearchGold" class="btn blue">Buscar</button>
+            <button id="btnAttack" class="btn red">Atacar</button>
             <button id="btnPotion" class="btn blue">Curar</button>
-            <button class="btn blue">Ayuda</button>
+            <button id="btnSearchGold" class="btn blue">Buscar</button>
         </div>
+        <button id="btnHelp" class="btn blue">Ayuda</button>
       </div>
     </section>
   </main>

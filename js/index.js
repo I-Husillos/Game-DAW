@@ -23,9 +23,9 @@ let btnBuy    = document.getElementById("btnBuy");
 // devuelve la información de la habitación actual del jugador
 function getCurrentRoom() {
     
-    let currentRoomId = defaultGameState.player.currentRoom;
+    let currentRoomId = gameState.player.currentRoom;
 
-    return defaultGameState.map.rooms.find(room => room.id === currentRoomId);
+    return gameState.map.rooms.find(room => room.id === currentRoomId);
 }
 
 // escribe un mensaje en el registro de eventos del juego
@@ -90,6 +90,12 @@ function clearEnemy() {
 
 // gestiona el movimiento del jugador entre habitaciones
 function movePlayer(direction) {
+    
+    if(enemyImg.style.display === "block") {
+        writeLog("No puedes huir, ¡hay un enemigo frente a ti!");
+        return;
+    }
+
     let room = getCurrentRoom();
     // obtiene el id de la siguiente habitación según la dirección
     let nextRoomId = room[direction];
@@ -112,6 +118,8 @@ function movePlayer(direction) {
 
 // gestiona los eventos que ocurren al entrar en una habitación
 function handleRoomEnter(room) {
+    professorrImg.style.display = "none";
+
     // si es una tienda, no aparecen monstruos
     if (room.isShop) {
         writeLog("Te encuentras en una zona segura.");
@@ -129,6 +137,7 @@ function handleRoomEnter(room) {
     // probabilidad de que aparezca el jefe final 2%
     if (roll < 0.02) {
         spawnBoss();
+
     // probabilidad de que aparezca un enemigo normal
     } else if (roll < room.monsterProb) {
         spawnEnemy();
@@ -140,18 +149,20 @@ function spawnEnemy() {
     // filtra los enemigos que no son jefes
     let enemies = gameState.map.enemies.filter(e => !e.isBoss);
     // selecciona un enemigo al azar
-    let enemy = enemies[Math.floor(Math.random() * enemies.length)];
+    let enemigoSeleccionado = enemies[Math.floor(Math.random() * enemies.length)];
 
-    renderEnemy(enemy);
-    writeLog(`¡Un ${enemy.name} aparece!`);
+    renderEnemy(enemigoSeleccionado);
+    writeLog(`¡Un ${enemigoSeleccionado.name} aparece!`);
+    iniciarCombate(enemigoSeleccionado);
 }
 
 // hace aparecer al jefe final
 function spawnBoss() {
-    let boss = gameState.map.enemies.find(e => e.isBoss);
+    let jefeFinal = gameState.map.enemies.find(e => e.isBoss);
 
-    renderEnemy(boss);
+    renderEnemy(jefeFinal);
     writeLog("¡HAS DESPERTADO AL JEFE FINAL!");
+    iniciarCombate(jefeFinal);
 }
 
 // permite al jugador buscar oro en la habitación
@@ -212,6 +223,104 @@ function buyPotion() {
 
     writeLog("Compras una poción.");
     renderStats();
+}
+
+function iniciarCombate(enemigoSeleccionado) {
+    let p = gameState.player;
+    // Clonamos el enemigo para no mutar datos persistentes de map.js
+    let enemigoTemporal = {
+        ...enemigoSeleccionado,
+        health: enemigoSeleccionado.health
+    };
+    
+    writeLog(`--- INICIA EL COMBATE CONTRA ${enemigoTemporal.name.toUpperCase()} ---`);
+
+    while (p.health > 0 && enemigoTemporal.health > 0) {
+        
+        // ATAQUE DEL MONSTRUO
+        let aleatorioM = Math.floor(Math.random() * 10) + 1;
+        let dañoAlHeroe = Math.max(0, (enemigoTemporal.strength + aleatorioM) - (p.defense + p.defenseBonus));
+        
+        if (dañoAlHeroe > 0) {
+            p.health -= dañoAlHeroe;
+            writeLog(`${enemigoTemporal.name} te ataca y te quita ${dañoAlHeroe} de vida.`);
+        } else {
+            writeLog(`${enemigoTemporal.name} ataca, ¡pero tu defensa lo bloquea!`);
+        }
+
+        // Comprobamos si el héroe ha muerto tras el golpe
+        if (p.health <= 0) {
+            p.health = 0; // Evitamos valores negativos en la UI
+            renderStats(); // Actualizamos visualmente
+            gestionarMuerteJugador();
+            return; // Salimos de la función de combate
+        }
+
+        // ATAQUE DEL HÉROE
+        let aleatorioH = Math.floor(Math.random() * 10) + 1;
+        let dañoAlMonstruo = Math.max(0, (p.strength + p.strengthBonus + aleatorioH) - enemigoTemporal.defence);
+        
+        if (dañoAlMonstruo > 0) {
+            enemigoTemporal.health -= dañoAlMonstruo;
+            writeLog(`Atacas al ${enemigoTemporal.name} y le causas ${dañoAlMonstruo} de daño.`);
+        } else {
+            writeLog(`Tu ataque no logra penetrar la piel del ${enemigoTemporal.name}.`);
+        }
+
+        // Comprobamos si el monstruo ha muerto
+        if (enemigoTemporal.health <= 0) {
+            writeLog(`¡Has derrotado al ${enemigoTemporal.name}!`);
+            clearEnemy();
+            gestionarRecompensa();
+        }
+    }
+    renderStats();
+}
+
+function gestionarRecompensa() {
+    // 40% de probabilidad de encontrar algo[cite: 5]
+    if (Math.random() <= 0.40) {
+        let bonificador = Math.floor(Math.random() * 10) + 1; // Valor entre 1 y 10[cite: 5, 6]
+        
+        // 50% probabilidad: menor a 0.5 es espada, mayor es escudo[cite: 5]
+        if (Math.random() < 0.5) {
+            writeLog(`¡Encuentras una espada con bonus +${bonificador}!`);
+            if (bonificador > gameState.player.strengthBonus) {
+                gameState.player.strengthBonus = bonificador;
+                writeLog("Es mejor que tu arma actual. ¡Equipada!");
+            } else {
+                writeLog("Es de peor calidad que la tuya. La desechas.");
+            }
+        } else {
+            writeLog(`¡Encuentras un escudo con bonus +${bonificador}!`);
+            if (bonificador > gameState.player.defenseBonus) {
+                gameState.player.defenseBonus = bonificador;
+                writeLog("Es mejor que tu escudo actual. ¡Equipado!");
+            } else {
+                writeLog("Es de peor calidad que el tuyo.");
+            }
+        }
+    }
+}
+
+
+function gestionarMuerteJugador() {
+    writeLog("HAS MUERTO");
+    writeLog("Pierdes todo tu oro, pociones y equipo. Vuelves a la entrada.");
+
+    // Reseteo de estadísticas al estado base[cite: 5]
+    let p = gameState.player;
+    p.health = 100;
+    p.gold = 0;
+    p.potions = 0;
+    p.strengthBonus = 0;
+    p.defenseBonus = 0;
+    p.currentRoom = 1; // Volver a la sala 1[cite: 5]
+
+    // Actualizar interfaz y cargar sala inicial[cite: 2]
+    renderStats();
+    renderRoom(getCurrentRoom());
+    clearEnemy();
 }
 
 // asigna la función de movimiento a los botones de dirección
