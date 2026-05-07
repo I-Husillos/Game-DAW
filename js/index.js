@@ -1,4 +1,5 @@
-// estado inicial del juego, que se carga desde el fichero map.js
+// el objeto gameState es la única fuente de verdad para el estado actual del juego
+// se inicializa con los datos de defaultGameState del fichero map.js
 let gameState = defaultGameState;
 
 // obtención de elementos del DOM para interactuar con la interfaz
@@ -20,12 +21,13 @@ let btnSearch = document.getElementById("btnSearchGold");
 let btnPotion = document.getElementById("btnPotion");
 let btnBuy    = document.getElementById("btnBuy");
 
-// devuelve la información de la habitación actual del jugador
+// devuelve el objeto completo de la habitación actual del jugador
+// para ello, busca en el array map.rooms utilizando el ID de la habitación guardado en el estado del jugador
 function getCurrentRoom() {
     
-    let currentRoomId = gameState.player.currentRoom;
+    let currentRoomId = defaultGameState.player.currentRoom;
 
-    return gameState.map.rooms.find(room => room.id === currentRoomId);
+    return defaultGameState.map.rooms.find(room => room.id === currentRoomId);
 }
 
 // escribe un mensaje en el registro de eventos del juego
@@ -97,7 +99,8 @@ function movePlayer(direction) {
     }
 
     let room = getCurrentRoom();
-    // obtiene el id de la siguiente habitación según la dirección
+    // obtiene el ID de la siguiente habitación según la dirección cardinal elegida
+    // el objeto room tiene propiedades como north, south, etc, que contienen el ID de la sala contigua
     let nextRoomId = room[direction];
 
     // si no hay salida, informa al jugador
@@ -106,20 +109,21 @@ function movePlayer(direction) {
         return;
     }
 
-    // actualiza la habitación actual del jugador
+    // actualiza el estado del juego cambiando la habitación actual del jugador
     gameState.player.currentRoom = nextRoomId;
 
-    // renderiza la nueva habitación y gestiona los eventos de entrada
+    // obtiene el objeto de la nueva habitación y prepara la escena
     let newRoom = getCurrentRoom();
+    // se resetea el estado de búsqueda de oro para la nueva habitación
+    newRoom.goldSearched = false; 
     clearEnemy();
     renderRoom(newRoom);
+    // una vez renderizada la sala, se ejecutan los eventos de entrada
     handleRoomEnter(newRoom);
 }
 
 // gestiona los eventos que ocurren al entrar en una habitación
 function handleRoomEnter(room) {
-    professorrImg.style.display = "none";
-
     // si es una tienda, no aparecen monstruos
     if (room.isShop) {
         writeLog("Te encuentras en una zona segura.");
@@ -131,25 +135,29 @@ function handleRoomEnter(room) {
         return;
     }
 
-    // genera un número aleatorio para determinar si aparece un enemigo
+    // si no es una tienda, oculta al profesor
+    professorrImg.style.display = "none";
+
+    // algoritmo de aparición de enemigos basado en probabilidad
+    // se genera un número aleatorio entre 0 y 1
     let roll = Math.random();
 
-    // probabilidad de que aparezca el jefe final 2%
-    if (roll < 0.02) {
+    // compara el número aleatorio con las probabilidades definidas para decidir qué evento ocurre
+    // hay un 2% de probabilidad de que aparezca el jefe
+    if (roll < 0.02) { // Probabilidad del 2%
         spawnBoss();
-
     // probabilidad de que aparezca un enemigo normal
     } else if (roll < room.monsterProb) {
         spawnEnemy();
     }
 }
 
-// hace aparecer un enemigo normal de forma aleatoria
+// elige y muestra un enemigo común de forma aleatoria
 function spawnEnemy() {
-    // filtra los enemigos que no son jefes
+    // primero, filtra el array de enemigos para obtener solo aquellos que no son jefes
     let enemies = gameState.map.enemies.filter(e => !e.isBoss);
     // selecciona un enemigo al azar
-    let enemigoSeleccionado = enemies[Math.floor(Math.random() * enemies.length)];
+    let enemy = enemies[Math.floor(Math.random() * enemies.length)];
 
     renderEnemy(enemigoSeleccionado);
     writeLog(`¡Un ${enemigoSeleccionado.name} aparece!`);
@@ -158,7 +166,7 @@ function spawnEnemy() {
 
 // hace aparecer al jefe final
 function spawnBoss() {
-    let jefeFinal = gameState.map.enemies.find(e => e.isBoss);
+    let boss = gameState.map.enemies.find(e => e.isBoss);
 
     renderEnemy(jefeFinal);
     writeLog("¡HAS DESPERTADO AL JEFE FINAL!");
@@ -169,13 +177,16 @@ function spawnBoss() {
 function searchGold() {
     let room = getCurrentRoom();
 
-    // comprueba si ya se ha buscado oro en la habitación
+    // se usa un flag para controlar si ya se ha buscado en esta sala, para evitar que el jugador busque oro infinitamente en el mismo lugar
     if (room.goldSearched) {
         writeLog("Aquí ya no queda nada de valor.");
         return;
+    } else if (room.isShop){
+        writeLog("Aquí no puedes buscar.");
+        return;
     }
 
-    // marca la habitación como registrada
+    // se establece el flag a true para que no se pueda volver a buscar
     room.goldSearched = true;
 
     // otorga una cantidad aleatoria de oro al jugador
@@ -196,7 +207,8 @@ function usePotion() {
     }
 
     p.potions--;
-    // recupera 25 de vida, sin superar el máximo de 100
+    // recupera 25 de vida se usa Math.min para asegurar que la vida
+    // no supere el máximo de 100, evitando así un desbordamiento de la estadística
     p.health = Math.min(100, p.health + 25);
 
     writeLog("Usas una poción y recuperas salud.");
