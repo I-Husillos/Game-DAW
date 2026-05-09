@@ -21,10 +21,10 @@ const defaultGameState={
                 isShop: false, // boleano que dice si la sala es una tienda
                 name: "Entrada principal", // nombre de la sala
                 description: "Majestuoso vestíbulo de techos altos bañado en penumbra azulada. Calabazas iluminadas y una gárgola de piedra decoran la entrada, mientras retratos colgantes custodian la gran escalera del fondo.", // descripción de la sala
-                north: 6, // ID de la sala contigua en esa dirección
+                north: null, // ID de la sala contigua en esa dirección
                 south: null, // ID de la sala contigua en esa dirección
-                west: null,
-                east: 2,
+                west: 2,
+                east: null,
                 img: "/game/img/scenaries/entrana-principal.png" // ruta de la imagen de la sala
             },
             {
@@ -35,8 +35,8 @@ const defaultGameState={
                 description: "Lujoso vestíbulo Art Déco en tonos púrpura. Sillones y atriles flanquean la puerta del ascensor, un oasis de calma antes del horror.", // descripción de la sala
                 north: 3, // ID de la sala contigua en esa dirección
                 south: null, // ID de la sala contigua en esa dirección
-                west: 1, // ID de la sala contigua en esa dirección
-                east: 5, // ID de la sala contigua en esa dirección
+                west: 5, // ID de la sala contigua en esa dirección
+                east: 1, // ID de la sala contigua en esa dirección
                 img: "/game/img/scenaries/ascensor.png" // ruta de la imagen de la sala
             },
             {
@@ -82,9 +82,9 @@ const defaultGameState={
                 name: "Salón",
                 description: "Elegante salón púrpura bañado en luz lunar azul. Globos negros con caras de fantasmas flotan sobre el juego de té, creando un ambiente siniestro pero elegante.",
                 north: null,
-                south: 1,
-                west: null,
-                east: 3,
+                south: null,
+                west: 3,
+                east: null,
                 img: "/game/img/scenaries/salon.png"
             },
             {
@@ -95,8 +95,8 @@ const defaultGameState={
                 description: "Dos armaduras imponentes custodian una misteriosa puerta iluminada. El aire vibra con una energía inquietante.",
                 north: null,
                 south: 5,
-                west: 3,
-                east: null,
+                west: null,
+                east: 3,
                 img: "/game/img/scenaries/sala-puerta-noble.png"
             }
         ],
@@ -129,7 +129,7 @@ const defaultGameState={
             {
                 name: "King Boo",
                 isBoss: true,
-                health: 120,
+                health: 100,
                 strength: 25,
                 defence: 15,
                 img: "/game/img/characters/King_boo.png"

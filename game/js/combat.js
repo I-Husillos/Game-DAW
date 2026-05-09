@@ -27,7 +27,7 @@ function iniciarCombate(enemigoSeleccionado) {
     enemigoTemporal = { ...enemigoSeleccionado };
     
     writeLog(`--- COMBATE POR TURNOS: ${enemigoTemporal.name.toUpperCase()} ---`);
-    writeLog("Pulsa el botón 'ATACAR' o escribe 'atacar' para empezar.");
+    writeLog("Pulsa el botón 'ATACAR'.");
     
     // Bloqueamos movimiento y activamos botón de ataque
     toggleControls(true);
@@ -84,12 +84,12 @@ function gestionarRecompensa() {
         
         // 50% probabilidad: menor a 0.5 es espada, mayor es escudo[cite: 5]
         if (Math.random() < 0.5) {
-            writeLog(`¡Encuentras una espada con bonus +${bonificador}!`);
+            writeLog(`¡Encuentras un potenciador para tu equipo con bonus +${bonificador}!`);
             if (bonificador > gameState.player.strengthBonus) {
                 gameState.player.strengthBonus = bonificador;
-                writeLog("Es mejor que tu arma actual. ¡Equipada!");
+                writeLog("Es mejor que tu equipo actual. ¡Equipado!");
             } else {
-                writeLog("Es de peor calidad que la tuya. La desechas.");
+                writeLog("Es de peor calidad que el tuyo. Lo desechas.");
             }
         } else {
             writeLog(`¡Encuentras un escudo con bonus +${bonificador}!`);
@@ -97,7 +97,7 @@ function gestionarRecompensa() {
                 gameState.player.defenseBonus = bonificador;
                 writeLog("Es mejor que tu escudo actual. ¡Equipado!");
             } else {
-                writeLog("Es de peor calidad que el tuyo.");
+                writeLog("Es de peor calidad que el tuyo. Lo desechas.");
             }
         }
     }

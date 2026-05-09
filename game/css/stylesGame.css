@@ -215,22 +215,60 @@ body {
     background: transparent;
 }
 
-/* Salas disponibles */
+/* Salas a las que puedes ir (Sin animación) */
 .map-cell.available {
-    border-color: #00ff00;
+    border: 2px solid #00ff00; /* Borde más grueso para destacar */
     color: #00ff00;
-    background: rgba(0, 80, 0, 0.4);
-    animation: pulse-exit 1s infinite alternate;
+    background: rgba(0, 100, 0, 0.5); /* Fondo verde más intenso */
+    /* Sombra doble: resplandor hacia adentro y hacia afuera */
+    box-shadow: inset 0 0 8px rgba(0, 255, 0, 0.4), 0 0 5px rgba(0, 255, 0, 0.6);
+    font-weight: bold;
 }
 
-/* Salas inaccesibles */
+/* Salas inaccesibles (Se mantiene igual) */
 .map-cell.inaccessible {
     border-color: #222;
     color: #444;
     background: rgba(10, 10, 10, 0.9);
 }
 
-@keyframes pulse-exit {
-    from { box-shadow: inset 0 0 5px rgba(0, 255, 0, 0.2); }
-    to { box-shadow: inset 0 0 15px rgba(0, 255, 0, 0.5); }
+
+.victory-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
+
+.victory-content {
+    background: #000;
+    border: 3px solid #00ff00;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px #00ff00;
+    max-width: 500px;
+}
+
+.victory-content h1 {
+    color: #00ff00;
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.results-table {
+    width: 100%;
+    margin: 30px 0;
+    border-collapse: collapse;
+    color: #fff;
+    font-family: monospace;
+}
+
+.results-table th { color: #00ff00; padding: 10px; border-bottom: 1px solid #004400; }
+.results-table td { padding: 10px; border-bottom: 1px solid #111; }
+
+.victory-actions .btn { margin: 10px; }

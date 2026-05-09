@@ -59,8 +59,8 @@
     <div class="directions">
         <button id="btnNorth" class="btn">Norte</button>
         <button id="btnSouth" class="btn">Sur</button>
-        <button id="btnEast" class="btn">Este</button>
         <button id="btnWest" class="btn">Oeste</button>
+        <button id="btnEast" class="btn">Este</button>
         <button id="btnMap" class="btn">Mapa</button>
     </div>
     <div class="actions">
@@ -75,6 +75,32 @@
     </div>
   </div>
 </section>
+
+<div id="victoryOverlay" class="victory-overlay" style="display: none;">
+    <div class="victory-content">
+        <h1>¡MANSIÓN LIBERADA!</h1>
+        <p>Has derrotado al Rey Boo y el eco de los espíritus se ha desvanecido.</p>
+        
+        <div class="results-comparison">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Estadística</th>
+                        <th>Inicial</th>
+                        <th>Final</th>
+                    </tr>
+                </thead>
+                <tbody id="victoryStatsBody">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="victory-actions">
+            <button class="btn big" onclick="location.reload()">Jugar de nuevo</button>
+            <a href="../index.html" class="btn blue big" style="text-decoration:none; display:inline-block; line-height: 40px;">Menú Principal</a>
+        </div>
+    </div>
+</div>
   </main>
 
   <!-- scripts -->
