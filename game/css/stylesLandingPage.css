@@ -1,0 +1,129 @@
+body {
+    background: #0a0f0a; /* Sobrescribe el background si fuera necesario */
+}
+
+/* Contenedor principal usando Flexbox */
+.landing-root {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Modificadores de anchura para la portada */
+.room-name,
+.messages,
+.interaction {
+    width: 100%;
+    max-width: 700px;
+}
+
+/* Ajustes tipográficos para la cabecera */
+.room-name h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.room-name p {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #7ec87e;
+    font-style: italic;
+}
+
+/* Ajustes de espaciado en la caja de mensajes */
+.messages p {
+    margin: 0 0 6px;
+    line-height: 1.6;
+}
+
+.messages p:last-child {
+    margin-bottom: 0;
+}
+
+/* Layout de la botonera inferior */
+.btn-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Modificador para botones más grandes */
+.btn.big {
+    height: auto;
+    padding: 8px 24px;
+    font-size: 14px;
+}
+
+/*
+    REPRODUCTOR DE VÍDEO
+*/
+.video-wrapper {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* position: relative es necesario para superponer #playOverlay */
+    position: relative;
+    box-sizing: border-box;
+}
+
+#gameVideo {
+    width: 100%;
+    border-radius: 4px;
+    display: block;
+    background: #000;
+    /* Fuerza una proporción 16:9 moderna */
+    aspect-ratio: 16/9;
+}
+
+#playOverlay {
+    /* Superpone el overlay sobre el vídeo */
+    position: absolute;
+    inset: 0; /* Cubre todo el área del vídeo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #051505;
+    border: 2px solid #004400;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #cfc;
+    font-family: monospace;
+    font-size: 14px;
+    gap: 12px;
+}
+
+#playOverlay:hover {
+    border-color: #00ff00;
+    color: #0f0;
+}
+
+#playOverlay:hover .play-circle {
+    box-shadow: 0 0 10px #00ff00;
+    border-color: #00ff00;
+}
+
+.play-circle {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #00cc00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.play-circle svg {
+    width: 28px;
+    height: 28px;
+    fill: #00ff00;
+    transform: translateX(3px);
+}

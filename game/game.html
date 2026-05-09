@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luigi y el Eco de los Espíritus</title>
+    <link rel="stylesheet" href="/game/css/common.css">
+    <link rel="stylesheet" href="/game/css/stylesGame.css">
+</head>
+
+<body>
+  <!-- CONTENEDOR PRINCIPAL COMO GRID -->
+  <main class="grid-root">
+    <section id="scene" class="scene">
+      <!-- fondo -->
+      <img id="sceneBg" class="scene-bg" src="" alt="Escenario">
+
+      <!-- enemigo (vacío por defecto) -->
+      <img id="enemyImg" class="enemy" src="" alt="" style="display:none">
+
+      <!-- profesor en la tienda -->
+      <img id="professorrImg" class="professor" src="" alt="" style="display:none">
+
+      <!-- nombre sala -->
+      <div id="nameRoom" class="room-name"></div>
+    </section>
+
+    <!-- stats del personaje-->
+  <section id="stats" class="player-card">
+      <div id="divStacs" class="text-stacs">
+        <h3 id="stats-title">Ficha del Personaje</h3>
+        <p><strong>Fuerza:</strong> 12</p>
+        <p><strong>Defensa:</strong> 8</p>
+        <p><strong>Vida:</strong> 70 / 100</p>
+        <p><strong>Oro:</strong> 123</p>
+        <p><strong>Pociones:</strong> 2</p>
+      </div>
+
+      <div id="divMap" class="map-container" style="display: none; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+          <h3 style="margin-top: 0;">Mapa de la Mansión</h3>
+          <div id="mapGrid" class="map-grid"></div>
+      </div>
+
+    </section>
+
+
+    <!-- sección de mensajes de acontecimientos-->
+      <!-- 'role="log"' indica que este div es un registro de mensajes -->
+      <div id="divMessages" class="messages" role="log">
+        <div id="log" class="text-messages">
+        </div>
+      </div>
+
+    <!-- controles del peraonaje más compra, ayuda y busqueda-->
+<section id="interaccion" class="interaction">
+  <div class="control-title"><h2>Controles</h2></div>
+
+  <div class="quick-buttons">
+    <div class="directions">
+        <button id="btnNorth" class="btn">Norte</button>
+        <button id="btnSouth" class="btn">Sur</button>
+        <button id="btnEast" class="btn">Este</button>
+        <button id="btnWest" class="btn">Oeste</button>
+        <button id="btnMap" class="btn">Mapa</button>
+    </div>
+    <div class="actions">
+      <button id="btnBuyPotion" class="btn">Poción</button>
+      <button id="btnBuyShield" class="btn">Escudo</button>
+      <button id="btnAttack" class="btn red" disabled>Atacar</button>
+      <button id="btnPotion" class="btn blue">Curar</button>
+      <button id="btnSearchGold" class="btn blue">Buscar</button>
+    </div>
+    <div>
+      <button id="btnHelp" class="btn blue">Ayuda</button>
+    </div>
+  </div>
+</section>
+  </main>
+
+  <!-- scripts -->
+  <script src="/game/js/map.js"></script>
+  <script src="/game/js/state.js"></script>
+  <script src="/game/js/ui.js"></script>
+  <script src="/game/js/combat.js"></script>
+  <script src="/game/js/actions.js"></script>
+  <script src="/game/js/main.js"></script>
+</body>
+</html>

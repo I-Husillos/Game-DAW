@@ -1,70 +1,62 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luigi y el Eco de los Espíritus</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>Luigi's Nightmare</title>
+    <link rel="stylesheet" href="/game/css/common.css">
+    <link rel="stylesheet" href="/game/css/stylesLandingPage.css">
 </head>
 
 <body>
-  <!-- CONTENEDOR PRINCIPAL COMO GRID -->
-  <main class="grid-root">
-    <section id="scene" class="scene">
-      <!-- fondo -->
-      <img id="sceneBg" class="scene-bg" src="" alt="Escenario">
+    <div class="landing-root">
 
-      <!-- enemigo (vacío por defecto) -->
-      <img id="enemyImg" class="enemy" src="" alt="" style="display:none">
-
-      <!-- profesor en la tienda -->
-      <img id="professorrImg" class="professor" src="" alt="" style="display:none">
-
-      <!-- nombre sala -->
-      <div id="nameRoom" class="room-name"></div>
-    </section>
-
-    <!-- stats del personaje-->
-    <section id="stats" class="player-card">
-      <div id="divStacs" class="text-stacs">
-        <h3 id="stats-title">Ficha del Personaje</h3>
-        <p><strong>Fuerza:</strong> 12</p>
-        <p><strong>Defensa:</strong> 8</p>
-        <p><strong>Vida:</strong> 70 / 100</p>
-        <p><strong>Oro:</strong> 123</p>
-        <p><strong>Pociones:</strong> 2</p>
-      </div>
-    </section>
-
-    <!-- sección de mensajes de acontecimientos-->
-      <!-- 'role="log"' indica que este div es un registro de mensajes -->
-      <div id="divMessages" class="messages" role="log">
-        <div id="log" class="text-messages">
+        <!-- título igual que el nombre de sala -->
+        <div class="room-name">
+            <h1>Luigi's Nightmare</h1>
+            <p>Una aventura entre sombras y espíritus oscuros</p>
         </div>
-      </div>
 
-    <!-- controles del peraonaje más compra, ayuda y busqueda-->
-    <section id="interaccion" class="interaction">
-      <div class="control-title"><h2>Controles</h2></div>
-      <div class="quick-buttons">
-        <div class="directions">
-            <button id="btnNorth" class="btn">Norte</button>
-            <button id="btnSouth" class="btn">Sur</button>
-            <button id="btnEast" class="btn">Este</button>
-            <button id="btnWest" class="btn">Oeste</button>
+        <!-- vídeo con marco de consola -->
+        <div class="video-wrapper">
+            <video id="gameVideo" loop playsinline preload="metadata">
+                <source src="/game/video/video-luigis-mansion-game.mp4" type="video/mp4">
+                Tu navegador no soporta vídeo HTML5.
+            </video>
+            <div id="playOverlay">
+                <div class="play-circle">
+                    <svg viewBox="0 0 24 24">
+                        <polygon points="5,3 19,12 5,21" />
+                    </svg>
+                </div>
+                <span>PULSA PARA REPRODUCIR</span>
+            </div>
         </div>
-        <div class="actions">
-            <button id="btnBuy" class="btn">Comprar</button>
-            <button id="btnAttack" class="btn red">Atacar</button>
-            <button id="btnPotion" class="btn blue">Curar</button>
-            <button id="btnSearchGold" class="btn blue">Buscar</button>
-        </div>
-        <button id="btnHelp" class="btn blue">Ayuda</button>
-      </div>
-    </section>
-  </main>
 
-  <script src="js/map.js"></script>
-  <script src="js/index.js"></script>
+        <!-- descripción como caja de mensajes -->
+        <div class="messages">
+            <p>&gt; Bienvenido a la Mansión de los Ecos...</p>
+            <p>&gt; Luigi se adentra en una mansión oscura plagada de espíritus. Explora habitaciones, combate enemigos,
+                acumula oro y visita al profesor de la tienda para mejorar tus habilidades.</p>
+            <p>&gt; ¿Tendrás el valor suficiente para sobrevivir?</p>
+        </div>
+
+        <!-- controles / botones de acción -->
+        <div class="interaction">
+            <div class="btn-group">
+                <a href="/game/game.html" style="text-decoration:none">
+                    <button class="btn big">▶ Jugar ahora</button>
+                </a>
+                <button class="btn blue big" onclick="document.getElementById('gameVideo').requestFullscreen()">
+                    Pantalla completa
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/game/js/scriptLandingPage.js"></script>
 </body>
+
 </html>

@@ -3,7 +3,7 @@ const defaultGameState={
     player: {
         name: "Luigi", // nombre del jugador
         health: 100, // salud actual del jugador
-        strength: 6, // fuerza base del jugador
+        strength: 12, // fuerza base del jugador
         strengthBonus: 0, // bonificación de fuerza
         defense: 5, // defensa base del jugador
         defenseBonus: 0, // bonificación de defensa
@@ -25,7 +25,7 @@ const defaultGameState={
                 south: null, // ID de la sala contigua en esa dirección
                 west: null,
                 east: 2,
-                img: "/img/scenaries/entrana-principal.png" // ruta de la imagen de la sala
+                img: "/game/img/scenaries/entrana-principal.png" // ruta de la imagen de la sala
             },
             {
                 id: 2, // identificador único de la sala
@@ -37,7 +37,7 @@ const defaultGameState={
                 south: null, // ID de la sala contigua en esa dirección
                 west: 1, // ID de la sala contigua en esa dirección
                 east: 5, // ID de la sala contigua en esa dirección
-                img: "/img/scenaries/ascensor.png" // ruta de la imagen de la sala
+                img: "/game/img/scenaries/ascensor.png" // ruta de la imagen de la sala
             },
             {
                 id: 3,
@@ -49,7 +49,7 @@ const defaultGameState={
                 south: 2,
                 west: 7,
                 east: 6,
-                img: "/img/scenaries/pasillo.png"
+                img: "/game/img/scenaries/pasillo.png"
             },
             {
                 id: 4,
@@ -61,7 +61,7 @@ const defaultGameState={
                 south: 3,
                 west: null,
                 east: null,
-                img: "/img/scenaries/puerta-reloj.png"
+                img: "/game/img/scenaries/puerta-reloj.png"
             },
             {
                 id: 5,
@@ -73,7 +73,7 @@ const defaultGameState={
                 south: null,
                 west: null,
                 east: 2,
-                img: "/img/scenaries/laboratorio.png"
+                img: "/game/img/scenaries/laboratorio.png"
             },
             {
                 id: 6,
@@ -85,7 +85,7 @@ const defaultGameState={
                 south: 1,
                 west: null,
                 east: 3,
-                img: "/img/scenaries/salon.png"
+                img: "/game/img/scenaries/salon.png"
             },
             {
                 id: 7,
@@ -97,7 +97,7 @@ const defaultGameState={
                 south: 5,
                 west: 3,
                 east: null,
-                img: "/img/scenaries/sala-puerta-noble.png"
+                img: "/game/img/scenaries/sala-puerta-noble.png"
             }
         ],
 
@@ -108,7 +108,7 @@ const defaultGameState={
                 health: 80, // salud del enemigo
                 strength: 12, // fuerza del enemigo
                 defence: 10, // defensa del enemigo
-                img: "/img/characters/armoured-greenie.png" // ruta de la imagen del enemigo
+                img: "/game/img/characters/armoured-greenie.png" // ruta de la imagen del enemigo
             },
             {
                 name: "Gobber",
@@ -116,7 +116,7 @@ const defaultGameState={
                 health: 40,
                 strength: 6,
                 defence: 3,
-                img: "/img/characters/gobber.png"
+                img: "/game/img/characters/gobber.png"
             },
             {
                 name: "Goob",
@@ -124,15 +124,15 @@ const defaultGameState={
                 health: 25,
                 strength: 4,
                 defence: 2,
-                img: "/img/characters/goob.png"
+                img: "/game/img/characters/goob.png"
             },
             {
                 name: "King Boo",
                 isBoss: true,
-                health: 220,
+                health: 120,
                 strength: 25,
                 defence: 15,
-                img: "/img/characters/King_boo.png"
+                img: "/game/img/characters/King_boo.png"
             },
             {
                 name: "Poltergeist",
@@ -140,7 +140,7 @@ const defaultGameState={
                 health: 60,
                 strength: 10,
                 defence: 5,
-                img: "/img/characters/poltergeist.png"
+                img: "/game/img/characters/poltergeist.png"
             },
             {
                 name: "Slammer",
@@ -148,7 +148,7 @@ const defaultGameState={
                 health: 100,
                 strength: 16,
                 defence: 12,
-                img: "/img/characters/slammer.png"
+                img: "/game/img/characters/slammer.png"
             },
             {
                 name: "Steward",
@@ -156,14 +156,14 @@ const defaultGameState={
                 health: 55,
                 strength: 9,
                 defence: 4,
-                img: "/img/characters/steward.png"
+                img: "/game/img/characters/steward.png"
             }
         ],
         character:[
             {
                 name: "Professor",
                 isBoss: false,
-                img: "/img/characters/professor_d._sastre.png"
+                img: "/game/img/characters/professor_d._sastre.png"
             }
         ],
     }
